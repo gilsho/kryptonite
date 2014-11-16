@@ -5,31 +5,15 @@ from Crypto import Random
 from Crypto.Cipher import AES
 from Crypto.Hash import SHA256
 from Crypto.Util import Counter
-from passlib.context import CryptContext
-
-
-password_context = CryptContext(
-    schemes=["pbkdf2_sha256"],
-    default="pbkdf2_sha256",
-    all__vary_rounds=0.0,
-    pbkdf2_sha256__default_rounds=2**12)
 
 
 class EncryptionError(RuntimeError):
     pass
 
 
+
 class DecryptionError(RuntimeError):
     pass
-
-
-def hash_password(password):
-    return password_context.encrypt(password.encode('utf-8'))
-
-
-def verify_password(password, password_hash):
-    return password_context.verify(password.encode('utf-8'), password_hash)
-
 
 class Cipher(object):
 

@@ -1,1 +1,2 @@
-from kryptonite import Cipher, DecryptionError, hash_password, verify_password
+from cipher import Cipher, DecryptionError
+from password import conceal, verify
