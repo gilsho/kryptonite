@@ -11,9 +11,9 @@ class EncryptionError(RuntimeError):
     pass
 
 
-
 class DecryptionError(RuntimeError):
     pass
+
 
 class Cipher(object):
 
@@ -73,4 +73,3 @@ class Cipher(object):
         if error:
             raise DecryptionError
         return plain_text
-
