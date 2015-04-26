@@ -29,6 +29,14 @@ class TestCipher(unittest.TestCase):
             self.assertNotIn(enc, hist)
             hist.add(enc)
 
+    def test_two_ciphers(self):
+        key = Cipher.generate_key()
+        cipher1 = Cipher(key)
+        cipher2 = Cipher(key)
+        msg = "magic"
+        enc = cipher1.encrypt(msg)
+        self.assertEquals(cipher2.decrypt(enc), msg)
+
     def test_malleability_detection(self):
         key = Cipher.generate_key()
         cipher = Cipher(key)
