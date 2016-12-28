@@ -5,6 +5,11 @@ from Crypto import Random
 from Crypto.Cipher import AES
 from Crypto.Hash import SHA256
 from Crypto.Util import Counter
+import sys
+
+# Python 3 compatibility code
+if sys.version_info > (3,):
+    long = int
 
 
 class EncryptionError(RuntimeError):
@@ -17,16 +22,13 @@ class DecryptionError(RuntimeError):
 
 class Cipher(object):
 
-    __CIPHER_KEY_EXPANSION__ = '\xe7r\x86\xd5]&||\x00o-\x93P\x85\x0cS'
-    __MAC1_KEY_EXPANSION__ = '\xab!\xb0\xc7\xa9A0\x03\x92\xb1I\x82y\xf2K\x8b'
-    __MAC2_KEY_EXPANSION__ = '~\x83kF\xf8\xd05\x84\xb6\x8bL\x8d\xcd\x10:$'
-
     def __init__(self, key):
-        ctr = Counter.new(AES.block_size * 8, initial_value=1)
-        cipher = AES.AESCipher(key, AES.MODE_CTR, counter=ctr)
-        self._cipherkey = cipher.encrypt(self.__CIPHER_KEY_EXPANSION__)
-        self._mackey1 = cipher.encrypt(self.__MAC1_KEY_EXPANSION__)
-        self._mackey2 = cipher.encrypt(self.__MAC2_KEY_EXPANSION__)
+        if len(key) != 3 * AES.block_size:
+            raise ValueError('wrong key length')
+
+        self._cipherkey = key[0: AES.block_size]
+        self._mackey1 = key[AES.block_size: 2 * AES.block_size]
+        self._mackey2 = key[2 * AES.block_size:]
 
     @staticmethod
     def random_bytes(n):
@@ -34,7 +36,7 @@ class Cipher(object):
 
     @classmethod
     def generate_key(cls):
-        return cls.random_bytes(AES.block_size)
+        return cls.random_bytes(AES.block_size * 3)
 
     @staticmethod
     def bin2long(n):

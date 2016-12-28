@@ -4,7 +4,7 @@ import random
 import unittest
 
 from kryptonite import conceal, verify
-from tests.utils import random_string
+from utils import random_string
 
 
 class TestCipher(unittest.TestCase):

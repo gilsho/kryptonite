@@ -12,7 +12,7 @@ password_context = CryptContext(
 
 
 def conceal(plain):
-    return password_context.encrypt(plain.encode('utf-8'))
+    return password_context.hash(plain.encode('utf-8'))
 
 
 def verify(plain, concealed):

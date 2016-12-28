@@ -1,4 +1,7 @@
--e git+git@github.com:gilsho/kryptonite.git@3f418d9fa36a223da97c05c7e2c88038aee39e3f#egg=kryptonite-master
-passlib==1.6.2
+funcsigs==1.0.2
+kryptonite==0.1.0.dev1
+mock==2.0.0
+passlib==1.7.0
+pbr==1.10.0
 pycrypto==2.6.1
-wsgiref==0.1.2
+six==1.10.0
